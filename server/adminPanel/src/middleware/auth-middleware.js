@@ -11,7 +11,7 @@ const authenticateUser = (req, res, next) => {
   if (token) {
     return generateResponse(400, res, BAD_REGUEST);
   }
-  jwt.verify(token, "my_secret-key", (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
     if (err) {
       return res.sendStatus(401, res, UNAUTHORIZED);
     } else {

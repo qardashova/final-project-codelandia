@@ -1,0 +1,14 @@
+@import "../../assets/styles/variables.scss";
+.popUp {
+  .MuiDialog-paper {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    .popupRoot{
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+      overflow: auto;
+    }
+  }
+}

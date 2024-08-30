@@ -1,0 +1,27 @@
+
+.breadcrumbs {
+  display: flex;
+  color: $text_secondary;
+  line-height: 150%;
+  a,div {
+    all: unset;
+    font-size: 12px;
+  }
+  .crumb a{
+    position: relative;
+    cursor: pointer;
+    transition: 0.1s;
+
+    &:hover {
+      transition: 0.2s;
+      color: $text-primary;
+    }
+  }
+  .crumb:not(:first-child) {
+    margin-left: 4px;
+  }
+
+  .crumb:last-child {
+    color: $text-primary;
+  }
+}
