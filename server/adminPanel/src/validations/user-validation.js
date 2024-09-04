@@ -11,7 +11,7 @@ const validateUser = (user) => {
 
 const checkUserNotNull = (user) => {
   const username = user.username;
-  if ((username = "")) {
+  if ((username === "")) {
     return generateValidationResult(
       false,
       baseMessages.generateNotNullEror(username)
@@ -21,7 +21,7 @@ const checkUserNotNull = (user) => {
 };
 
 const checkUserExistence = (user) =>{
-  
+
 }
 
 module.exports = validateUser;

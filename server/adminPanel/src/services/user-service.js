@@ -2,6 +2,7 @@ const pool = require("../config/db");
 const { successResult } = require("../utils/result-generators");
 const {
   DATA_ADDED_SUCCESSFULLY,
+  DATA_DELETED_SUCCESSFULLY,
 } = require("../validations/messages/base-messages");
 const validatePassword = require("../validations/password-validation");
 const validateUser = require("../validations/user-validation");
@@ -9,13 +10,15 @@ const bcrypt = require("bcrypt");
 
 const getAllUsers = async () => {
   const res = await pool.query("select * from users");
-  return res.rows;
+
+  return successResult("",res.rows)
 };
 
 const getUserByUserName = async (username) => {
-  const res = await pool.query("Select * from users u where u.username = $1", [
-    username,
-  ]);
+  const res = await pool.query(
+    "Select username,fullname from users u where u.username = $1",
+    [username]
+  );
   return res.rows[0];
 };
 
@@ -33,16 +36,26 @@ const addUser = async (user) => {
   }
 
   //TODO Adding user to db after hasing the password
-  user.password = bcrypt.hash(user.password, 10);
-  await pool.query("call add_user($1,$2)", [user.username, user.password]);
+  user.password = await bcrypt.hash(user.password, 10);
+  await pool.query("call add_user($1,$2,$3)", [
+    user.username,
+    user.fullname,
+    user.password,
+  ]);
 
   const addedUser = await getUserByUserName(user.username);
 
   return successResult(DATA_ADDED_SUCCESSFULLY, addedUser);
 };
 
+const deleteUser = async (userId) => {
+  await pool.query("UPDATE product_variants SET column_name = $1 WHERE user_id = $1", [userId]);
+  return successResult(DATA_DELETED_SUCCESSFULLY, "");
+};
+
 module.exports = {
   getAllUsers,
   getUserByUserName,
   addUser,
+  deleteUser
 };
