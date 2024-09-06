@@ -1,6 +1,6 @@
 import TextField from "@mui/material/TextField";
 
-const Input = ({ label, value, name, onChange }) => {
+const Input = ({ label, value, name, onChange,type }) => {
   return (
     <TextField
       id="outlined-basic"
@@ -10,6 +10,8 @@ const Input = ({ label, value, name, onChange }) => {
       value={value}
       name={name}
       onChange={onChange}
+      fullWidth
+      type={type}
     />
   );
 };

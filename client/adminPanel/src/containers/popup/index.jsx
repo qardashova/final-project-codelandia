@@ -33,7 +33,7 @@ const Popup = ({
         justifyContent="space-between"
         style={{ background: "#F8F8F8" }}
       >
-        <Typography variant="h3" component="h3" padding={"10px 0"}>
+        <Typography variant="h6" component="h3" padding={"10px 0"}>
           {popupTitle}
         </Typography>
         <CustomButton onClick={handleClose}>

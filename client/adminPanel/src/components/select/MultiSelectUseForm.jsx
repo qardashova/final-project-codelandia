@@ -1,24 +1,23 @@
 import { Controller, useFormContext } from "react-hook-form";
-import Input from "./Input";
-const InputUseForm = ({ name, label, type }) => {
+import MultiSelect from "./MultiSelect";
+const SelectUseForm = ({ name, label, options }) => {
   const { register } = useFormContext();
-
   const { ...registerProps } = { ...register(name) };
 
   return (
     <Controller
       {...registerProps}
       render={({ field }) => (
-        <Input
+        <MultiSelect
           label={label}
-          type={type}
           name={field.name}
           value={field.value || ""}
-          onChange={field.onChange}
+          options={options}
+          handleChange={field.onChange}
         />
       )}
     ></Controller>
   );
 };
 
-export default InputUseForm;
+export default SelectUseForm;

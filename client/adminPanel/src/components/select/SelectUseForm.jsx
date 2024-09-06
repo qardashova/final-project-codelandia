@@ -8,7 +8,7 @@ const SelectUseForm = ({ name, label, options }) => {
     <Controller
       {...registerProps}
       render={({ field }) => (
-        <Select
+        <Select 
           label={label}
           name={field.name}
           value={field.value || ""}

@@ -1,9 +1,9 @@
-import { FormControl, Select as MuiSelect, MenuItem } from "@mui/material";
-import React from "react";
+import { FormControl, Select as MuiSelect, MenuItem, OutlinedInput, InputLabel } from "@mui/material";
 
-const Select = ({ name, options = [], label, value, handleChange }) => {
+const Select = ({ name, options = [], label, value, handleChange, fullData }) => {
   return (
-    <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+    <FormControl style={{ width: "100%" }} size="small">
+      <InputLabel id="demo-select-small-label">{label}</InputLabel> 
       <MuiSelect
         labelId="demo-select-small-label"
         id="demo-select-small"
@@ -11,10 +11,11 @@ const Select = ({ name, options = [], label, value, handleChange }) => {
         value={value}
         label={label}
         onChange={handleChange}
+        fullWidth
       >
-        {options?.map((data: any) => (
-          <MenuItem key={data.id} value={data.value}>
-            {data.value}
+        {options?.map((item) => (
+          <MenuItem key={item.id} value={fullData ? item : item.id}>
+            {item.name}
           </MenuItem>
         ))}
       </MuiSelect>
