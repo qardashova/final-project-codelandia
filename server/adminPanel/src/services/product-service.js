@@ -28,6 +28,14 @@ const getProductById = async (productId) => {
   }
 };
 
+const getProductPriceByVariants = async ({ productId, colorId, sizeId }) => {
+  const res = await pool.query(
+    "Select price from product_variants where product_id = $1 and size_id = $2 and color_id = $3",
+    [productId, colorId, sizeId]
+  );
+  return successResult("", res.rows[0]);
+};
+
 const addProduct = async (product, productVariants) => {
   try {
     await pool.query("BEGIN");
@@ -39,10 +47,10 @@ const addProduct = async (product, productVariants) => {
     const productId = productResult.rows[0].id;
 
     for (const variant of productVariants) {
-      const { colorId, sizeId, price, image } = variant;
+      const { colorId, sizeId, price } = variant;
       await pool.query(
         "INSERT INTO product_variants (product_id, color_id, size_id, price,image) VALUES ($1, $2, $3, $4,$5)",
-        [productId, colorId, sizeId, price, image]
+        [productId, colorId, sizeId, price, "example.jpg"]
       );
     }
     await pool.query("COMMIT");
@@ -63,4 +71,5 @@ module.exports = {
   addProduct,
   deleteProduct,
   getProductById,
+  getProductPriceByVariants,
 };
