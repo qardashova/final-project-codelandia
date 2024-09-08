@@ -1,19 +1,20 @@
 const jwt = require("jsonwebtoken");
-const generateResponse = require("../utils/response-generator");
 const {
   BAD_REGUEST,
   UNAUTHORIZED,
 } = require("../validations/messages/status-messages");
+const { errorResult } = require("../utils/result-generators");
+const { generateBaseResponse } = require("../utils/response-generator");
 
 const authenticateUser = (req, res, next) => {
   const authHeader = req.headers.authorization;
   const token = authHeader && authHeader.split(" ")[1];
-  if (token) {
-    return generateResponse(400, res, BAD_REGUEST);
+  if (!token) {
+    return generateBaseResponse(401, res, errorResult(UNAUTHORIZED));
   }
-  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
+  jwt.verify(token, "my_secret_key", (err, user) => {
     if (err) {
-      return res.sendStatus(401, res, UNAUTHORIZED);
+      return generateBaseResponse(401, res, errorResult(UNAUTHORIZED));
     } else {
       req.user = user;
       next();

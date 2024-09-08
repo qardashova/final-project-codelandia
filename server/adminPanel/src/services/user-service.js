@@ -11,15 +11,22 @@ const bcrypt = require("bcrypt");
 const getAllUsers = async () => {
   const res = await pool.query("select * from users");
 
-  return successResult("",res.rows)
+  return successResult("", res.rows);
 };
 
 const getUserByUserName = async (username) => {
-  const res = await pool.query(
-    "Select username,fullname from users u where u.username = $1",
-    [username]
-  );
+  const res = await pool.query("Select * from users u where u.username = $1", [
+    username,
+  ]);
   return res.rows[0];
+};
+
+const getUserInfo = async (id) => {
+  const res = await pool.query(
+    "Select u.id,u.fullname from users u where u.id = $1",
+    [id]
+  );
+  return successResult("", res.rows[0]);
 };
 
 const addUser = async (user) => {
@@ -45,11 +52,11 @@ const addUser = async (user) => {
 
   const addedUser = await getUserByUserName(user.username);
 
-  return successResult(DATA_ADDED_SUCCESSFULLY, addedUser);
+  return successResult(DATA_ADDED_SUCCESSFULLY, addedUser.username);
 };
 
 const deleteUser = async (userId) => {
-  await pool.query("UPDATE product_variants SET column_name = $1 WHERE user_id = $1", [userId]);
+  await pool.query("UPDATE users SET deleted = $1 WHERE id = $1", [userId]);
   return successResult(DATA_DELETED_SUCCESSFULLY, "");
 };
 
@@ -57,5 +64,6 @@ module.exports = {
   getAllUsers,
   getUserByUserName,
   addUser,
-  deleteUser
+  deleteUser,
+  getUserInfo
 };

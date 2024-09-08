@@ -6,42 +6,47 @@ const {
   USER_PASSWORD_INCORRECT,
 } = require("../validations/messages/user-messages");
 const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const {
+  generateNotNullEror,
+} = require("../validations/messages/base-messages");
 require("dotenv").config();
 /**
  * @param {User} user
  */
 
 const login = async (user) => {
+  if (!user.username || !user.password) {
+    return errorResult(generateNotNullEror(`Username or Password`));
+  }
+
   //TODO check user is exists or not
-  const existingUser = await userServices.getUserByUserName(user);
+  const existingUser = await userServices.getUserByUserName(user.username);
 
   if (!existingUser) {
     return errorResult(USER_NOT_FOUND);
   }
 
   //TODO check password is correct or not
-  const passwordCheckingResult = bcrypt.compare(
+
+  const passwordCheckingResult = await bcrypt.compare(
     user.password,
     existingUser.password
   );
-
   if (!passwordCheckingResult) {
     return errorResult(USER_PASSWORD_INCORRECT);
   }
-
   //TODO create token
   const token = jwt.sign(
-    { username: existingUser.username },
-    process.env.JWT_SECRET_KEY,
-    { expiresIn: "1h" }
+    { userId: existingUser.id, username: existingUser.username },
+    "my_secret_key",
+    {
+      expiresIn: "1h",
+    }
   );
   const expireDate = new Date();
   expireDate.setHours(expireDate.getHours() + 1);
-
-  return {
-    token,
-    expireDate,
-  };
+  return successResult("", { token, expireDate });
 };
 
 module.exports = {
