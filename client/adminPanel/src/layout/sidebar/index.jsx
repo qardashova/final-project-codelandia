@@ -12,17 +12,21 @@ import {
 import LogoutOutlinedIcon from "@mui/icons-material/LogoutOutlined";
 import { useNavigate } from "react-router-dom";
 import { sidebarItems } from "../../constants/sidebar-list";
+import { useAppDispatch, useAppSelector } from "../../redux/store";
+import { logout } from "../../redux/reducers/authReducer";
 
 const Sidebar = () => {
+  const { userInfo } = useAppSelector((state) => state.user);
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
   return (
     <Drawer
       sx={{
-        width: "240px",
+        width: "280px",
         flexShrink: 0,
         "& .MuiDrawer-paper": {
-          width: "240px",
+          width: "280px",
           boxSizing: "border-box",
         },
       }}
@@ -30,8 +34,8 @@ const Sidebar = () => {
       anchor="left"
     >
       <Toolbar>
-        <Typography variant="h4" component="h3">
-          Dashboard
+        <Typography variant="h5" component="h4">
+          {userInfo?.fullname}
         </Typography>
       </Toolbar>
       <Divider />
@@ -45,7 +49,7 @@ const Sidebar = () => {
           </ListItem>
         ))}
         <ListItem disablePadding>
-          <ListItemButton>
+          <ListItemButton onClick={() => dispatch(logout())}>
             <ListItemIcon>
               <LogoutOutlinedIcon />
             </ListItemIcon>
@@ -58,4 +62,3 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
-

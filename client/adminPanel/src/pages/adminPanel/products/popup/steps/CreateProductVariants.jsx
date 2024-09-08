@@ -5,8 +5,8 @@ import "./style.scss";
 
 const CreateProductVariants = ({
   methods,
-  colors,
-  sizes,
+  colors = [],
+  sizes = [],
   variantData,
   setVariantData,
 }) => {

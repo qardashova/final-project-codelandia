@@ -5,8 +5,17 @@ import PublicRoutes from "./routes/PublicRoutes";
 import Login from "./pages/auth";
 import InnerLayout from "./layout/InnerLayout";
 import Products from "./pages/adminPanel/products";
+import { useAppDispatch, useAppSelector } from "./redux/store";
+import { useEffect } from "react";
+import { getUserInfo } from "./redux/actions/userActions";
 
 function App() {
+  const { isAuth } = useAppSelector((state) => state.auth);
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, [isAuth]);
+
   return (
     <Routes>
       <Route path="/" element={<ProtectedRoutes />}>

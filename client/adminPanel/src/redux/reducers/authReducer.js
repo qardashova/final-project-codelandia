@@ -1,16 +1,32 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { login } from "../actions/authActions";
+import { LS_TOKEN_KEY } from "../../constants/storageKeys";
 
 const initialState = {
-  isAuth: true,
+  isAuth: null,
 };
 
 const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
-  extraReducers: (builder) => {},
+  reducers: {
+    logout: (state) => {
+      state.isAuth = false;
+      localStorage.removeItem("token");
+    },
+    setIsAuth: (state) => {
+      state.isAuth = true;
+    },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(login.fulfilled, (state, action) => {
+      const { token } = action.payload;
+      state.isAuth = true;
+      localStorage.setItem(LS_TOKEN_KEY, token);
+    });
+  },
 });
 
-export const {} = authSlice.actions;
+export const { logout, setIsAuth } = authSlice.actions;
 
 export default authSlice.reducer;
