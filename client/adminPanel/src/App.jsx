@@ -8,6 +8,7 @@ import Products from "./pages/adminPanel/products";
 import { useAppDispatch, useAppSelector } from "./redux/store";
 import { useEffect } from "react";
 import { getUserInfo } from "./redux/actions/userActions";
+import Blogs from "./pages/adminPanel/blogs";
 
 function App() {
   const { isAuth } = useAppSelector((state) => state.auth);
@@ -22,6 +23,7 @@ function App() {
         <Route path="/" element={<InnerLayout />}>
           <Route path="/" element={<Users />} />
           <Route path="/products" element={<Products />} />
+          <Route path="/blogs" element={<Blogs />} />
         </Route>
       </Route>
       <Route path="/login" element={<PublicRoutes />}>

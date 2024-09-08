@@ -50,7 +50,7 @@ const rows = [
   { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
 ];
 
-const Users = () => {
+const Blogs = () => {
   return (
     <>
       <Row justifyContent="space-between">
@@ -58,7 +58,7 @@ const Users = () => {
           <Input label={"search"} />
           <CustomButton variant={"outlined"}>Filter</CustomButton>
         </Row>
-        <CustomButton variant={"contained"}>New User</CustomButton>
+        <CustomButton variant={"contained"}>New Blog</CustomButton>
       </Row>
       <Box marginTop={"20px"}>
         <Table rows={rows} columns={columns} />
@@ -67,4 +67,4 @@ const Users = () => {
   );
 };
 
-export default Users;
+export default Blogs;

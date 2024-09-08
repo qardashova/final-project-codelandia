@@ -14,33 +14,33 @@ const CreateProductVariants = ({
   const [color, size] = watch(["color", "size"]);
 
   const handleFileChange = (e, colorId) => {
-    const file = e.target.files[0];
-
-    if (variantData.find((item) => item.colorId === colorId)) {
-      return setVariantData((prev) =>
-        prev.map((item) => {
-          if (item.colorId === colorId) {
-            return {
-              ...item,
-              file,
-            };
-          }
-          return item;
-        })
-      );
-    } else {
-      return setVariantData((prev) => [
-        ...prev,
-        {
-          colorId,
-          file,
-        },
-      ]);
-    }
+    const image = e.target.files[0];
+    console.log(image);
+    // if (variantData.find((item) => item.colorId === colorId)) {
+    //   return setVariantData((prev) =>
+    //     prev.map((item) => {
+    //       if (item.colorId === colorId) {
+    //         return {
+    //           ...item,
+    //           image,
+    //         };
+    //       }
+    //       return item;
+    //     })
+    //   );
+    // } else {
+    //   return setVariantData((prev) => [
+    //     ...prev,
+    //     {
+    //       colorId,
+    //       image,
+    //     },
+    //   ]);
+    // }
   };
 
   const handlePriceChange = (e, colorId, sizeId) => {
-    const price = e.target.value;
+    const price = Number(e.target.value);
 
     if (
       variantData.find(
@@ -73,11 +73,10 @@ const CreateProductVariants = ({
   return (
     <div className="variant-container">
       {color.map((colorId) => {
-
         return (
           <div className="variant" key={colorId}>
             {variantData.find(
-              (item) => item.colorId === colorId && !!item.file
+              (item) => item.colorId === colorId && !!item.image
             ) ? (
               <div className="property img-selected">Image Selected</div>
             ) : (

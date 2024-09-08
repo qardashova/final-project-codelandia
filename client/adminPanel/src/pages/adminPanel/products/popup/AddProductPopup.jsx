@@ -4,15 +4,20 @@ import Stepper from "../../../../components/stepper";
 import React, { useState } from "react";
 import CreateProduct from "./steps/CreateProduct";
 import CreateProductVariants from "./steps/CreateProductVariants";
+import { useAppDispatch } from "../../../../redux/store";
+import { addProduct } from "../../../../redux/actions/productActions";
 
 const AddProductPopup = ({ open, handleClose }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [variantData, setVariantData] = useState([]);
   const methods = useForm();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = methods.handleSubmit((data) => {
-    console.log(data);
+    const { color,size,...product} = data;
+    console.log(product);
     console.log(variantData);
+    dispatch(addProduct({product,productVariants:variantData}))
   });
 
   return (
@@ -22,8 +27,8 @@ const AddProductPopup = ({ open, handleClose }) => {
       popupTitle={"New Product"}
       minWidth="700px"
     >
-      <FormProvider {...methods}>
-        <Form>
+      <FormProvider {...methods} >
+        <Form encType="multipart/form-data">
           <Stepper
             activeStep={activeStep}
             setActiveStep={setActiveStep}

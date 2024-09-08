@@ -14,7 +14,7 @@ const CreateProduct = ({ colors, sizes }) => {
       </Grid2>
       <Grid2 size={12}>
         <SelectUseForm
-          name={"category"}
+          name={"categoryId"}
           label={"Category"}
           options={options}
           fullData

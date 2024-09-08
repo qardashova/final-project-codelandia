@@ -1,5 +1,6 @@
 import GroupOutlinedIcon from "@mui/icons-material/GroupOutlined";
 import ProductionQuantityLimitsOutlinedIcon from "@mui/icons-material/ProductionQuantityLimitsOutlined";
+import BookOutlinedIcon from "@mui/icons-material/BookOutlined";
 
 export const sidebarItems = [
   {
@@ -13,5 +14,11 @@ export const sidebarItems = [
     title: "Products",
     icon: <ProductionQuantityLimitsOutlinedIcon />,
     pathName: "/products",
+  },
+  {
+    id: 3,
+    title: "Blogs",
+    icon: <BookOutlinedIcon />,
+    pathName: "/blogs",
   },
 ];
