@@ -8,7 +8,7 @@ const CreateBlog = ({ open, handleClose }) => {
   const methods = useForm();
 
   const handleSubmit = methods.handleSubmit((data) => {
-    console.log(data);
+    console.log(data, "data");
   });
 
   return (
