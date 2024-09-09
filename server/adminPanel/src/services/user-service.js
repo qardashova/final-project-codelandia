@@ -9,7 +9,7 @@ const validateUser = require("../validations/user-validation");
 const bcrypt = require("bcrypt");
 
 const getAllUsers = async () => {
-  const res = await pool.query("select * from users");
+  const res = await pool.query("select * from users where deleted = 0");
 
   return successResult("", res.rows);
 };
@@ -65,5 +65,5 @@ module.exports = {
   getUserByUserName,
   addUser,
   deleteUser,
-  getUserInfo
+  getUserInfo,
 };
