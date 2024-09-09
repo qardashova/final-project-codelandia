@@ -10,7 +10,12 @@ const CreateProduct = ({ colors, sizes }) => {
         <InputUseForm name={"name"} label={"Product name"} />
       </Grid2>
       <Grid2 size={12}>
-        <InputUseForm name={"description"} label={"Description"} />
+        <InputUseForm
+          name={"description"}
+          label={"Description"}
+          rows={4}
+          multiline
+        />
       </Grid2>
       <Grid2 size={12}>
         <SelectUseForm

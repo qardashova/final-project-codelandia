@@ -5,6 +5,9 @@ import CustomButton from "../../../components/button";
 import Table from "../../../components/table";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import CreateBlog from "./popup/CreateBlog";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { handleOpenPopup } from "../../../redux/reducers/blogReducer";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -51,6 +54,9 @@ const rows = [
 ];
 
 const Blogs = () => {
+  const { popups } = useAppSelector((state) => state.blog);
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <Row justifyContent="space-between">
@@ -58,11 +64,20 @@ const Blogs = () => {
           <Input label={"search"} />
           <CustomButton variant={"outlined"}>Filter</CustomButton>
         </Row>
-        <CustomButton variant={"contained"}>New Blog</CustomButton>
+        <CustomButton
+          variant={"contained"}
+          onClick={() => dispatch(handleOpenPopup("addBlogPopup"))}
+        >
+          New Blog
+        </CustomButton>
       </Row>
       <Box marginTop={"20px"}>
         <Table rows={rows} columns={columns} />
       </Box>
+      <CreateBlog
+        open={popups.addBlogPopup}
+        handleClose={() => dispatch(handleOpenPopup("addBlogPopup"))}
+      />
     </>
   );
 };

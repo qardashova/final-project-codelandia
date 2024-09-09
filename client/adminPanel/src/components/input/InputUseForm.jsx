@@ -1,6 +1,6 @@
 import { Controller, useFormContext } from "react-hook-form";
 import Input from "./Input";
-const InputUseForm = ({ name, label, type }) => {
+const InputUseForm = ({ name, label, ...props }) => {
   const { register } = useFormContext();
 
   const { ...registerProps } = { ...register(name) };
@@ -10,8 +10,8 @@ const InputUseForm = ({ name, label, type }) => {
       {...registerProps}
       render={({ field }) => (
         <Input
+          {...props}
           label={label}
-          type={type}
           name={field.name}
           value={field.value || ""}
           onChange={field.onChange}

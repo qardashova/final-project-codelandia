@@ -5,6 +5,9 @@ import CustomButton from "../../../components/button";
 import Table from "../../../components/table";
 import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
+import AddUser from "./popup/AddUser";
+import { useAppDispatch, useAppSelector } from "../../../redux/store";
+import { handleOpenPopup } from "../../../redux/reducers/userReducer";
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -51,6 +54,9 @@ const rows = [
 ];
 
 const Users = () => {
+  const { popups } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
   return (
     <>
       <Row justifyContent="space-between">
@@ -58,11 +64,20 @@ const Users = () => {
           <Input label={"search"} />
           <CustomButton variant={"outlined"}>Filter</CustomButton>
         </Row>
-        <CustomButton variant={"contained"}>New User</CustomButton>
+        <CustomButton
+          variant={"contained"}
+          onClick={() => dispatch(handleOpenPopup("addUserPopup"))}
+        >
+          New User
+        </CustomButton>
       </Row>
       <Box marginTop={"20px"}>
         <Table rows={rows} columns={columns} />
       </Box>
+      <AddUser
+        open={popups.addUserPopup}
+        handleClose={() => dispatch(handleOpenPopup("addUserPopup"))}
+      />
     </>
   );
 };
