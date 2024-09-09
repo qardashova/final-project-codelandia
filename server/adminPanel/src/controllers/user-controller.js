@@ -7,7 +7,10 @@ const {
 
 const getAllUsers = async (req, res) => {
   try {
-    const result = await userServices.getAllUsers();
+    const search = req.query.search;
+    const limit = req.query.limit;
+    const page = req.query.page;
+    const result = await userServices.getAllUsers({search,limit,page});
     generateResponse(res,result);
   } catch (error) {
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);

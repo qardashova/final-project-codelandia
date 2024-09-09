@@ -45,7 +45,6 @@ const getPriceByColorId = async (req, res) => {
 const addProduct = async (req, res) => {
   try {
     const { product, productVariants } = req.body;
-    console.log(req.body, "body");
     const result = await productServices.addProduct(product, productVariants);
     generateResponse(res, result);
   } catch (error) {

@@ -8,8 +8,12 @@ const validatePassword = require("../validations/password-validation");
 const validateUser = require("../validations/user-validation");
 const bcrypt = require("bcrypt");
 
-const getAllUsers = async () => {
-  const res = await pool.query("select * from users where deleted = 0");
+const getAllUsers = async ({ search = null, limit = 10, page = 1 }) => {
+  const res = await pool.query("select * from get_all_users($1,$2,$3)", [
+    search,
+    limit,
+    page,
+  ]);
 
   return successResult("", res.rows);
 };
