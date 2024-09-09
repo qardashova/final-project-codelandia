@@ -2,12 +2,15 @@ import { Form, FormProvider, useForm } from "react-hook-form";
 import Popup from "../../../../containers/popup";
 import { Grid2 } from "@mui/material";
 import InputUseForm from "../../../../components/input/InputUseForm";
+import { useAppDispatch } from "../../../../redux/store";
+import { addUser } from "../../../../redux/actions/userActions";
 
 const AddUser = ({ open, handleClose }) => {
   const methods = useForm();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = methods.handleSubmit((data) => {
-    console.log(data);
+    dispatch(addUser(data));
   });
 
   return (

@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { getUserInfo } from "../actions/userActions";
+import { addUser, getAllUsers, getUserInfo } from "../actions/userActions";
 
 const initialState = {
   userInfo: null,
@@ -7,6 +7,7 @@ const initialState = {
   popups: {
     addUserPopup: false,
   },
+  totalCount: 0,
 };
 
 const userSlice = createSlice({
@@ -20,6 +21,13 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getUserInfo.fulfilled, (state, action) => {
       state.userInfo = action.payload;
+    });
+    builder.addCase(getAllUsers.fulfilled, (state, action) => {
+      state.users = action.payload;
+      state.totalCount = action.payload[0]?.total_count;
+    });
+    builder.addCase(addUser.fulfilled, (state) => {
+      state.popups.addUserPopup = false;
     });
   },
 });

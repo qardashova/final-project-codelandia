@@ -1,7 +1,7 @@
 import axios from "axios";
 import { store } from "../redux/store";
 import { logout, setIsAuth } from "../redux/reducers/authReducer";
-import { LS_TOKEN_KEY } from "../constants/storageKeys";
+import { LS_TOKEN_KEY } from "../constants/consts";
 
 const baseApi = axios.create({
   baseURL: "http://localhost:3001",
