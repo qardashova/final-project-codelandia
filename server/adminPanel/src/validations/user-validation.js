@@ -20,8 +20,6 @@ const checkUserNotNull = (user) => {
   return generateValidationResult(true, "");
 };
 
-const checkUserExistence = (user) =>{
 
-}
 
 module.exports = validateUser;
