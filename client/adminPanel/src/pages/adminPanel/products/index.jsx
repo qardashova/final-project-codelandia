@@ -3,11 +3,56 @@ import Row from "../../../components/row";
 import Input from "../../../components/input/Input";
 import CustomButton from "../../../components/button";
 import Table from "../../../components/table";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { handleOpenPopup } from "../../../redux/reducers/productReducer";
 import AddProductPopup from "./popup/AddProductPopup";
+import { useState } from "react";
+
+const Products = () => {
+  const [searchKey, setSearchKey] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const dispatch = useAppDispatch();
+  const { popups, products, totalCount } = useAppSelector(
+    (state) => state.product
+  );
+
+  return (
+    <>
+      <Row justifyContent="space-between">
+        <Row gap={"10px"}>
+          <Input
+            label={"search"}
+            value={searchKey}
+            onChange={(e) => setSearchKey(e.target.value)}
+          />
+          <CustomButton variant={"outlined"}>Filter</CustomButton>
+        </Row>
+        <CustomButton
+          variant={"contained"}
+          onClick={() => dispatch(handleOpenPopup("addProductPopup"))}
+        >
+          New Product
+        </CustomButton>
+      </Row>
+      <Box marginTop={"20px"}>
+        <Table
+          rows={products}
+          columns={columns}
+          currentPage={currentPage}
+          rowCount={totalCount}
+          handlePaginationChange={(page) => setCurrentPage(page)}
+        />
+      </Box>
+      <AddProductPopup
+        open={popups.addProductPopup}
+        handleClose={() => dispatch(handleOpenPopup("addProductPopup"))}
+      />
+    </>
+  );
+};
+
+export default Products;
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -32,12 +77,6 @@ const columns = [
       <div>
         <CustomButton
           variant="text"
-          // onClick={() => handleEdit(params.row)}
-        >
-          <EditOutlinedIcon />
-        </CustomButton>
-        <CustomButton
-          variant="text"
           // onClick={() => handleDelete(params.row)}
         >
           <DeleteOutlineOutlinedIcon />
@@ -46,46 +85,3 @@ const columns = [
     ),
   },
 ];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
-
-const Products = () => {
-  const dispatch = useAppDispatch();
-  const { popups } = useAppSelector((state) => state.product);
-
-  return (
-    <>
-      <Row justifyContent="space-between">
-        <Row gap={"10px"}>
-          <Input label={"search"} />
-          <CustomButton variant={"outlined"}>Filter</CustomButton>
-        </Row>
-        <CustomButton
-          variant={"contained"}
-          onClick={() => dispatch(handleOpenPopup("addProductPopup"))}
-        >
-          New Product
-        </CustomButton>
-      </Row>
-      <Box marginTop={"20px"}>
-        <Table rows={rows} columns={columns} />
-      </Box>
-      <AddProductPopup
-        open={popups.addProductPopup}
-        handleClose={() => dispatch(handleOpenPopup("addProductPopup"))}
-      />
-    </>
-  );
-};
-
-export default Products;

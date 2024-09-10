@@ -3,6 +3,7 @@ import Popup from "../../../../containers/popup";
 import { Form, FormProvider, useForm } from "react-hook-form";
 import InputUseForm from "../../../../components/input/InputUseForm";
 import FileInputUseForm from "../../../../components/fileInput/FileInputUseForm";
+import { useEffect } from "react";
 
 const CreateBlog = ({ open, handleClose }) => {
   const methods = useForm();
@@ -10,6 +11,12 @@ const CreateBlog = ({ open, handleClose }) => {
   const handleSubmit = methods.handleSubmit((data) => {
     console.log(data, "data");
   });
+
+  useEffect(() => {
+    if (!open) {
+      methods.reset();
+    }
+  }, [open, methods]);
 
   return (
     <Popup

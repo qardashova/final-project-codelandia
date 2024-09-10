@@ -1,24 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
+  FAQs: [],
   popups: {
-    addProductPopup: false,
+    addFAQpopup: false,
   },
-  products: [],
   totalCount: 0,
 };
 
-const productSilce = createSlice({
-  name: "product",
+const faqSlice = createSlice({
+  name: "faq",
   initialState,
   reducers: {
     handleOpenPopup(state, action) {
       state.popups[action.payload] = !state.popups[action.payload];
     },
   },
-  extraReducers: (builder) => {},
+  extraReducers: (builder) => {
+    
+  },
 });
 
-export const { handleOpenPopup } = productSilce.actions;
+export const { handleOpenPopup } = faqSlice.actions;
 
-export default productSilce.reducer;
+export default faqSlice.reducer;

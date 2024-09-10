@@ -6,10 +6,11 @@ const initialState = {
     addBlogPopup: false,
   },
   blogs: [],
+  totalCount: 0,
 };
 
 const blogSlice = createSlice({
-  name: "auth",
+  name: "blog",
   initialState,
   reducers: {
     handleOpenPopup(state, action) {

@@ -1,7 +1,7 @@
 import { Form, FormProvider, useForm } from "react-hook-form";
 import Popup from "../../../../containers/popup";
 import Stepper from "../../../../components/stepper";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CreateProduct from "./steps/CreateProduct";
 import CreateProductVariants from "./steps/CreateProductVariants";
 import { useAppDispatch } from "../../../../redux/store";
@@ -19,6 +19,12 @@ const AddProductPopup = ({ open, handleClose }) => {
     console.log(variantData);
     dispatch(addProduct({product,productVariants:variantData}))
   });
+
+  useEffect(() => {
+    if (!open) {
+      methods.reset();
+    }
+  }, [open, methods]);
 
   return (
     <Popup

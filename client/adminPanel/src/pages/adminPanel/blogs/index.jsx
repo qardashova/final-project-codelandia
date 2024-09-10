@@ -8,6 +8,52 @@ import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined
 import CreateBlog from "./popup/CreateBlog";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { handleOpenPopup } from "../../../redux/reducers/blogReducer";
+import { useState } from "react";
+
+
+
+const Blogs = () => {
+  const [searchKey, setSearchKey] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const { popups, blogs, totalCount } = useAppSelector((state) => state.blog);
+  const dispatch = useAppDispatch();
+
+  return (
+    <>
+      <Row justifyContent="space-between">
+        <Row gap={"10px"}>
+          <Input
+            label={"search"}
+            value={searchKey}
+            onChange={(e) => setSearchKey(e.target.value)}
+          />
+          <CustomButton variant={"outlined"}>Filter</CustomButton>
+        </Row>
+        <CustomButton
+          variant={"contained"}
+          onClick={() => dispatch(handleOpenPopup("addBlogPopup"))}
+        >
+          New Blog
+        </CustomButton>
+      </Row>
+      <Box marginTop={"20px"}>
+        <Table
+          rows={blogs}
+          columns={columns}
+          currentPage={currentPage}
+          rowCount={totalCount}
+          handlePaginationChange={(page) => setCurrentPage(page)}
+        />
+      </Box>
+      <CreateBlog
+        open={popups.addBlogPopup}
+        handleClose={() => dispatch(handleOpenPopup("addBlogPopup"))}
+      />
+    </>
+  );
+};
+
+export default Blogs;
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
@@ -32,6 +78,12 @@ const columns = [
       <div>
         <CustomButton
           variant="text"
+          // onClick={() => handleEdit(params.row)}
+        >
+          <EditOutlinedIcon />
+        </CustomButton>
+        <CustomButton
+          variant="text"
           // onClick={() => handleDelete(params.row)}
         >
           <DeleteOutlineOutlinedIcon />
@@ -40,46 +92,3 @@ const columns = [
     ),
   },
 ];
-
-const rows = [
-  { id: 1, lastName: "Snow", firstName: "Jon", age: 35 },
-  { id: 2, lastName: "Lannister", firstName: "Cersei", age: 42 },
-  { id: 3, lastName: "Lannister", firstName: "Jaime", age: 45 },
-  { id: 4, lastName: "Stark", firstName: "Arya", age: 16 },
-  { id: 5, lastName: "Targaryen", firstName: "Daenerys", age: null },
-  { id: 6, lastName: "Melisandre", firstName: null, age: 150 },
-  { id: 7, lastName: "Clifford", firstName: "Ferrara", age: 44 },
-  { id: 8, lastName: "Frances", firstName: "Rossini", age: 36 },
-  { id: 9, lastName: "Roxie", firstName: "Harvey", age: 65 },
-];
-
-const Blogs = () => {
-  const { popups } = useAppSelector((state) => state.blog);
-  const dispatch = useAppDispatch();
-
-  return (
-    <>
-      <Row justifyContent="space-between">
-        <Row gap={"10px"}>
-          <Input label={"search"} />
-          <CustomButton variant={"outlined"}>Filter</CustomButton>
-        </Row>
-        <CustomButton
-          variant={"contained"}
-          onClick={() => dispatch(handleOpenPopup("addBlogPopup"))}
-        >
-          New Blog
-        </CustomButton>
-      </Row>
-      <Box marginTop={"20px"}>
-        <Table rows={rows} columns={columns} />
-      </Box>
-      <CreateBlog
-        open={popups.addBlogPopup}
-        handleClose={() => dispatch(handleOpenPopup("addBlogPopup"))}
-      />
-    </>
-  );
-};
-
-export default Blogs;

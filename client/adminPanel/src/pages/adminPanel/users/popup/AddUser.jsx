@@ -4,6 +4,7 @@ import { Grid2 } from "@mui/material";
 import InputUseForm from "../../../../components/input/InputUseForm";
 import { useAppDispatch } from "../../../../redux/store";
 import { addUser } from "../../../../redux/actions/userActions";
+import { useEffect } from "react";
 
 const AddUser = ({ open, handleClose }) => {
   const methods = useForm();
@@ -12,6 +13,12 @@ const AddUser = ({ open, handleClose }) => {
   const handleSubmit = methods.handleSubmit((data) => {
     dispatch(addUser(data));
   });
+
+  useEffect(() => {
+    if (!open) {
+      methods.reset();
+    }
+  }, [open, methods]);
 
   return (
     <Popup

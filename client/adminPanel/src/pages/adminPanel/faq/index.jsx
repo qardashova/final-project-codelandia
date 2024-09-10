@@ -1,35 +1,19 @@
-import { Box } from "@mui/material";
+import { useState } from "react";
 import Row from "../../../components/row";
 import Input from "../../../components/input/Input";
-import CustomButton from "../../../components/button";
+import { Box } from "@mui/material";
 import Table from "../../../components/table";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
+import CustomButton from "../../../components/button";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
-import AddUser from "./popup/AddUser";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
-import { handleOpenPopup } from "../../../redux/reducers/userReducer";
-import { useEffect, useState } from "react";
-import { deleteUser, getAllUsers } from "../../../redux/actions/userActions";
-import { PAGE_LIMIT } from "../../../constants/consts";
+import { handleOpenPopup } from "../../../redux/reducers/faqReducer";
+import AddFAQ from "./popup/AddFAQ";
 
-
-const Users = () => {
+const FAQ = () => {
   const [searchKey, setSearchKey] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const { popups, users, totalCount } = useAppSelector((state) => state.user);
+  const { FAQs, totalCount, popups } = useAppSelector((state) => state.faq);
   const dispatch = useAppDispatch();
-
-  useEffect(() => {
-    // dispatch(
-    //   getAllUsers({
-    //     search: searchKey,
-    //     limit: PAGE_LIMIT,
-    //     page: currentPage,
-    //   })
-    // );
-  }, [searchKey, currentPage]);
-
-  console.log(currentPage);
 
   return (
     <>
@@ -44,30 +28,29 @@ const Users = () => {
         </Row>
         <CustomButton
           variant={"contained"}
-          onClick={() => dispatch(handleOpenPopup("addUserPopup"))}
+          onClick={() => dispatch(handleOpenPopup("addFAQpopup"))}
         >
-          New User
+          New FAQ
         </CustomButton>
       </Row>
       <Box marginTop={"20px"}>
         <Table
-          rows={users}
+          rows={FAQs}
           columns={columns}
           currentPage={currentPage}
           rowCount={totalCount}
           handlePaginationChange={(page) => setCurrentPage(page)}
         />
       </Box>
-      <AddUser
-        open={popups.addUserPopup}
-        handleClose={() => dispatch(handleOpenPopup("addUserPopup"))}
+      <AddFAQ
+        open={popups.addFAQpopup}
+        handleClose={() => dispatch(handleOpenPopup("addFAQpopup"))}
       />
     </>
   );
 };
 
-export default Users;
-
+export default FAQ;
 
 const columns = [
   { field: "id", headerName: "ID" },

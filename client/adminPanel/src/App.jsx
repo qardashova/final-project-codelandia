@@ -9,13 +9,14 @@ import { useAppDispatch, useAppSelector } from "./redux/store";
 import { useEffect } from "react";
 import { getUserInfo } from "./redux/actions/userActions";
 import Blogs from "./pages/adminPanel/blogs";
+import FAQ from "./pages/adminPanel/faq";
 
 function App() {
   const { isAuth } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatch(getUserInfo());
-  }, [isAuth]);
+  // useEffect(() => {
+  //   dispatch(getUserInfo());
+  // }, [isAuth]);
 
   return (
     <Routes>
@@ -24,6 +25,7 @@ function App() {
           <Route path="/" element={<Users />} />
           <Route path="/products" element={<Products />} />
           <Route path="/blogs" element={<Blogs />} />
+          <Route path="/faq" element={<FAQ />} />
         </Route>
       </Route>
       <Route path="/login" element={<PublicRoutes />}>
