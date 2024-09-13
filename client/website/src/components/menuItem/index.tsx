@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
 import "./index.scss";
+import { NavLink } from "react-router-dom";
 interface MenuItemTypes {
   label: string;
   list?: string[];
-  link?: string;
+  link: string;
 }
 
 const MenuItem = ({ label, list, link }: MenuItemTypes) => {
@@ -16,8 +16,14 @@ const MenuItem = ({ label, list, link }: MenuItemTypes) => {
   return (
     <div className="menu-item">
       <li onMouseEnter={handleMouseEnter} onMouseLeave={handleMouseLeave}>
-        {label}
-        <Link to={link} />
+        <NavLink
+          to={link}
+          className={({ isActive, isPending }) =>
+            isPending ? "pending" : isActive ? "active" : ""
+          }
+        >
+          {label}
+        </NavLink>
       </li>
       {openMenu && list && (
         <ul

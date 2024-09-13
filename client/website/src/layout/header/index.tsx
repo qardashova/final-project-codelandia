@@ -15,10 +15,11 @@ const Header = ({ bgImage }: HeaderTypes) => {
         />
         <nav>
           <ul className="nav-container">
-            <MenuItem label="Home" />
-            <MenuItem label="Contact" />
-            <MenuItem label="Blog" />
-            <MenuItem label="Pages" list={["Login", "Register"]} />
+            <MenuItem label="Home" link=""/>
+            <MenuItem label="Catalog" link="/catalog"/>
+            <MenuItem label="Contact" link=""/>
+            <MenuItem label="Blog" link=""/>
+            <MenuItem label="Pages" list={["Login", "Register"]} link=""/>
           </ul>
         </nav>
       </div>

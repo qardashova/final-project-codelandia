@@ -1,0 +1,10 @@
+.page-container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  .main-container{
+    width: 85%;
+    background-color: yellowgreen;
+    padding: 30px 0;
+  }
+}
