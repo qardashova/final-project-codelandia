@@ -1,6 +1,9 @@
 const Blog = require("../models/blog");
 const blogServices = require("../services/blog-services");
-const { generateResponse, generateBaseResponse } = require("../utils/response-generator");
+const {
+  generateResponse,
+  generateBaseResponse,
+} = require("../utils/response-generator");
 const {
   DATA_ADDED_SUCCESSFULLY,
 } = require("../validations/messages/base-messages");
@@ -11,7 +14,7 @@ const {
 const getAllBlogs = async (req, res) => {
   try {
     const result = await blogServices.getAllBlogs();
-    generateResponse(res,result);
+    generateResponse(res, result);
   } catch (error) {
     console.log(error);
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
@@ -22,7 +25,7 @@ const getBlogById = async (req, res) => {
   try {
     const blogId = req.params.id;
     const result = await blogServices.getBlogById(blogId);
-    generateResponse(res,result);
+    generateResponse(res, result);
   } catch (error) {
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
   }
@@ -32,8 +35,10 @@ const addBlog = async (req, res) => {
   try {
     const userId = req.user.userId;
     const blog = new Blog(req.body);
+    console.log(req.file, "file");
+
     const result = await blogServices.addBlog({ createdBy: userId, ...blog });
-    generateResponse(res,result);
+    generateResponse(res, result);
   } catch (error) {
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
   }
@@ -47,7 +52,7 @@ const updateBlog = async (req, res) => {
       updatedBy: userId,
       ...updatedBlog,
     });
-    generateResponse(res,result);
+    generateResponse(res, result);
   } catch (error) {
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
   }
@@ -57,7 +62,7 @@ const deleteBlog = async (req, res) => {
   try {
     const blogId = req.params.id;
     const result = await blogServices.deleteBlog(blogId);
-    generateResponse(res,result);
+    generateResponse(res, result);
   } catch (error) {
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
   }
