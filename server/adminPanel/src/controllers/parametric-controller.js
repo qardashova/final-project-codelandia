@@ -3,6 +3,9 @@ const {
   generateResponse,
   generateBaseResponse,
 } = require("../utils/response-generator");
+const {
+  INTERNAL_SERVER_ERROR,
+} = require("../validations/messages/status-messages");
 
 const getAllColors = async (req, res) => {
   try {

@@ -18,8 +18,8 @@ const getBlogById = async (id) => {
 
 const addBlog = async (blog) => {
   const res = await pool.query(
-    "Insert into blogs(created_by,name,description) values ($1,$2,$3) RETURNING id",
-    [blog.createdBy, blog.name, blog.description]
+    "Insert into blogs(created_by,name,description,image) values ($1,$2,$3,$4) RETURNING id",
+    [blog.createdBy, blog.name, blog.description, blog.image]
   );
   return successResult(DATA_ADDED_SUCCESSFULLY, res.rows[0]);
 };

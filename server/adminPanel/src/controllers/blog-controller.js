@@ -35,9 +35,13 @@ const addBlog = async (req, res) => {
   try {
     const userId = req.user.userId;
     const blog = new Blog(req.body);
-    console.log(req.file, "file");
+    const image = req.file?.filename;
 
-    const result = await blogServices.addBlog({ createdBy: userId, ...blog });
+    const result = await blogServices.addBlog({
+      createdBy: userId,
+      image,
+      ...blog,
+    });
     generateResponse(res, result);
   } catch (error) {
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);

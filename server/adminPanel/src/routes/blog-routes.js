@@ -1,4 +1,5 @@
 const blogController = require("../controllers/blog-controller");
+const upload = require("../config/multer");
 
 const express = require("express");
 const router = express.Router();

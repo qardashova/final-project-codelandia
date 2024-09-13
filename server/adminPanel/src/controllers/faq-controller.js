@@ -1,11 +1,13 @@
-import FAQ from "../models/faq";
-import {
-  generateBaseResponse,
+const {
   generateResponse,
-} from "../utils/response-generator";
-import { INTERNAL_SERVER_ERROR } from "../validations/messages/status-messages";
+  generateBaseResponse,
+} = require("../utils/response-generator");
+const {
+  INTERNAL_SERVER_ERROR,
+} = require("../validations/messages/status-messages");
 
 const faqServices = require("../services/faq-services");
+const FAQ = require("../models/faq");
 
 const getAllFAQ = async (req, res) => {
   try {

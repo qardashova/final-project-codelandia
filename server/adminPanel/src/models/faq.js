@@ -1,9 +1,9 @@
 class FAQ {
-  constructor({ id, question, answer, order }) {
+  constructor({ id, question, answer, priority }) {
     this.id = id;
     this.question = question;
     this.answer = answer;
-    this.order = order;
+    this.priority = priority;
   }
 }
 
