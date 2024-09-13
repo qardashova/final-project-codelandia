@@ -29,6 +29,7 @@ export const addBlog = createAsyncThunk(
   "blogs/addBlog",
   async (body, thunkApi) => {
     try {
+      console.log(body,'kkkk');
       const res = await baseApi.post(`/blogs/addBlog`, body);
       return res?.data?.data;
     } catch (error) {
@@ -54,6 +55,20 @@ export const deleteBlog = createAsyncThunk(
   async (id, thunkApi) => {
     try {
       const res = await baseApi.delete(`blogs/deleteBlog/${id}`);
+      return res?.data.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error);
+    }
+  }
+);
+
+export const upload = createAsyncThunk(
+  "blogs/upload",
+  async (body, thunkApi) => {
+    try {
+      console.log(body,'body');
+      
+      const res = await baseApi.post("/upload", body);
       return res?.data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error);

@@ -4,12 +4,19 @@ import { Form, FormProvider, useForm } from "react-hook-form";
 import InputUseForm from "../../../../components/input/InputUseForm";
 import FileInputUseForm from "../../../../components/fileInput/FileInputUseForm";
 import { useEffect } from "react";
+import { useAppDispatch } from "../../../../redux/store";
+import { upload } from "../../../../redux/actions/blogActions";
 
 const CreateBlog = ({ open, handleClose }) => {
   const methods = useForm();
+  const dispatch = useAppDispatch();
 
   const handleSubmit = methods.handleSubmit((data) => {
-    console.log(data, "data");
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("description", data.description);
+    formData.append("image", data.image);
+    dispatch(upload(formData));
   });
 
   useEffect(() => {
@@ -28,7 +35,7 @@ const CreateBlog = ({ open, handleClose }) => {
       onClickMainButton={handleSubmit}
     >
       <FormProvider {...methods}>
-        <Form>
+        <Form encType="multipart/form-data">
           <Grid2 container spacing={2}>
             <Grid2 size={12}>
               <InputUseForm name={"name"} label={"Name"} />
@@ -42,7 +49,7 @@ const CreateBlog = ({ open, handleClose }) => {
               />
             </Grid2>
             <Grid2 size={12}>
-              <FileInputUseForm name={"image"} base64 />
+              <FileInputUseForm name={"image"} />
             </Grid2>
           </Grid2>
         </Form>
