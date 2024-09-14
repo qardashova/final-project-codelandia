@@ -5,6 +5,9 @@ const {
 } = require("../validations/messages/status-messages");
 const { errorResult } = require("../utils/result-generators");
 const { generateBaseResponse } = require("../utils/response-generator");
+const dotenv = require("dotenv");
+
+dotenv.config({ path:"../.env"})
 
 const authenticateUser = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -12,7 +15,7 @@ const authenticateUser = (req, res, next) => {
   if (!token) {
     return generateBaseResponse(401, res, errorResult(UNAUTHORIZED));
   }
-  jwt.verify(token, "my_secret_key", (err, user) => {
+  jwt.verify(token, process.env.JWT_SECRET_KEY, (err, user) => {
     if (err) {
       return generateBaseResponse(401, res, errorResult(UNAUTHORIZED));
     } else {

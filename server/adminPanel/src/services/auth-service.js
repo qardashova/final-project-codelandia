@@ -10,7 +10,9 @@ const jwt = require("jsonwebtoken");
 const {
   generateNotNullEror,
 } = require("../validations/messages/base-messages");
-require("dotenv").config();
+const dotenv = require("dotenv");
+
+dotenv.config({ path:"../.env"})
 /**
  * @param {User} user
  */
@@ -39,7 +41,7 @@ const login = async (user) => {
   //TODO create token
   const token = jwt.sign(
     { userId: existingUser.id, username: existingUser.username },
-    "my_secret_key",
+    process.env.JWT_SECRET_KEY,
     {
       expiresIn: "1h",
     }

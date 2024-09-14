@@ -6,9 +6,13 @@ const {
   DATA_DELETED_SUCCESSFULLY,
 } = require("../validations/messages/base-messages");
 
-const getAllBlogs = async () => {
-  const res = await pool.query("SELECT * FROM get_all_blogs();");
-  return successResult("", res.rows[0]);
+const getAllBlogs = async ({ search = null, limit = 10, page = 1 }) => {
+  const res = await pool.query("SELECT * FROM get_all_blogs($1,$2,$3)", [
+    search,
+    limit,
+    page,
+  ]);
+  return successResult("", res.rows);
 };
 
 const getBlogById = async (id) => {
@@ -25,12 +29,14 @@ const addBlog = async (blog) => {
 };
 
 const updateBlog = async (blog) => {
+  console.log(blog,'blog');
+  
   const res = await pool.query(
     `UPDATE blogs 
-         SET name = $1, description = $2, updated_by = $3, updated_date = NOW()
-         WHERE id = $4
+         SET name = $1, description = $2, updated_by = $3, image = $4 , updated_date = NOW()
+         WHERE id = $5
          RETURNING id`,
-    [blog.name, blog.description, blog.updatedBy, blog.id]
+    [blog.name, blog.description, blog.updatedBy, blog.image, blog.id]
   );
   return successResult(DATA_UPDATED_SUCCESSFULLY, res.rows[0]);
 };

@@ -22,8 +22,6 @@ const getFAQById = async (id) => {
 
 const addFAQ = async (faq) => {
   try {
-    console.log(faq,'faq');
-    
     const res = await pool.query("call add_faq($1,$2,$3)", [
       faq.question,
       faq.answer,

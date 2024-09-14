@@ -5,15 +5,15 @@ const {
   generateBaseResponse,
 } = require("../utils/response-generator");
 const {
-  DATA_ADDED_SUCCESSFULLY,
-} = require("../validations/messages/base-messages");
-const {
   INTERNAL_SERVER_ERROR,
 } = require("../validations/messages/status-messages");
 
 const getAllBlogs = async (req, res) => {
   try {
-    const result = await blogServices.getAllBlogs();
+    const search = req.query.search;
+    const limit = req.query.limit;
+    const page = req.query.page;
+    const result = await blogServices.getAllBlogs({ search, limit, page });
     generateResponse(res, result);
   } catch (error) {
     console.log(error);
@@ -51,9 +51,11 @@ const addBlog = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     const userId = req.user.userId;
-    const updatedBlog = new Blog(req.body);
+    const image = req.file?.filename;
+    const updatedBlog = req.body;
     const result = await blogServices.updateBlog({
       updatedBy: userId,
+      image,
       ...updatedBlog,
     });
     generateResponse(res, result);
