@@ -11,8 +11,6 @@ const Table = ({ rows, columns, currentPage = 1, handlePaginationChange, rowCoun
     }
   };
 
-  console.log(PAGE_LIMIT, currentPage,"llls");
-
   return (
     <Paper sx={{ height: "70vh", width: "100%" }}>
       <DataGrid
@@ -25,7 +23,7 @@ const Table = ({ rows, columns, currentPage = 1, handlePaginationChange, rowCoun
         }}
         rowCount={rowCount}
         onPaginationModelChange={onPaginationModelChange}
-        checkboxSelection
+        // checkboxSelection
         sx={{ border: 0 }}
       />
     </Paper>

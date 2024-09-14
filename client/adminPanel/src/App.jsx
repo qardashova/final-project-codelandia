@@ -14,9 +14,9 @@ import FAQ from "./pages/adminPanel/faq";
 function App() {
   const { isAuth } = useAppSelector((state) => state.auth);
   const dispatch = useAppDispatch();
-  // useEffect(() => {
-  //   dispatch(getUserInfo());
-  // }, [isAuth]);
+  useEffect(() => {
+    dispatch(getUserInfo());
+  }, [isAuth]);
 
   return (
     <Routes>

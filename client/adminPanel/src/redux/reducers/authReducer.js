@@ -3,7 +3,7 @@ import { login } from "../actions/authActions";
 import { LS_TOKEN_KEY } from "../../constants/consts";
 
 const initialState = {
-  isAuth: true,
+  isAuth: null,
 };
 
 const authSlice = createSlice({

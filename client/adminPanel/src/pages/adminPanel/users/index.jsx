@@ -3,7 +3,6 @@ import Row from "../../../components/row";
 import Input from "../../../components/input/Input";
 import CustomButton from "../../../components/button";
 import Table from "../../../components/table";
-import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import AddUser from "./popup/AddUser";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
@@ -20,16 +19,15 @@ const Users = () => {
   const dispatch = useAppDispatch();
 
   useEffect(() => {
-    // dispatch(
-    //   getAllUsers({
-    //     search: searchKey,
-    //     limit: PAGE_LIMIT,
-    //     page: currentPage,
-    //   })
-    // );
+    dispatch(
+      getAllUsers({
+        search: searchKey,
+        limit: PAGE_LIMIT,
+        page: currentPage,
+      })
+    );
   }, [searchKey, currentPage]);
 
-  console.log(currentPage);
 
   return (
     <>
