@@ -9,9 +9,20 @@ const {
 
 const getAllProducts = async (req, res) => {
   try {
-    const result = await productServices.getAllProducts();
+    const categoryId = req.body.categoryId;
+    const search = req.body.search;
+    const limit = req.body.limit;
+    const page = req.body.page;
+    const result = await productServices.getAllProducts({
+      categoryId,
+      search,
+      limit,
+      page,
+    });
     generateResponse(res, result);
   } catch (error) {
+    console.log(error);
+    
     generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
   }
 };
@@ -55,6 +66,8 @@ const addProduct = async (req, res) => {
 
 const deleteProduct = async (req, res) => {
   try {
+    console.log(req.params);
+    
     const productId = req.params.id;
     const result = await productServices.deleteProduct(productId);
     generateResponse(res, result);

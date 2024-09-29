@@ -29,8 +29,6 @@ const addBlog = async (blog) => {
 };
 
 const updateBlog = async (blog) => {
-  console.log(blog,'blog');
-  
   const res = await pool.query(
     `UPDATE blogs 
          SET name = $1, description = $2, updated_by = $3, image = $4 , updated_date = NOW()

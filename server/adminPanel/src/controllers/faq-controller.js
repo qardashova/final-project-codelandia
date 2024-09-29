@@ -37,7 +37,11 @@ const addFAQ = async (req, res) => {
     const result = await faqServices.addFAQ(faq);
     generateResponse(res, result);
   } catch (error) {
-    generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
+    if (error.code === "P0001") {
+      generateBaseResponse(409, res, error.message);
+    }else{
+      generateBaseResponse(500, res, INTERNAL_SERVER_ERROR);
+    }
   }
 };
 

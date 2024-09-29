@@ -6,6 +6,6 @@ router.get("/getAllFAQ", faqController.getAllFAQ);
 router.get("/getFAQById/:id", faqController.getFAQById);
 router.post("/addFAQ", faqController.addFAQ);
 router.post("/updateFAQ", faqController.updateFAQ);
-router.delete("/deleteFAQ", faqController.deleteFAQ);
+router.delete("/deleteFAQ/:id", faqController.deleteFAQ);
 
 module.exports = router;

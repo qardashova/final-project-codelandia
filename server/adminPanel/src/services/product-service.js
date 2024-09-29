@@ -5,8 +5,11 @@ const {
   DATA_DELETED_SUCCESSFULLY,
 } = require("../validations/messages/base-messages");
 
-const getAllProducts = async () => {
-  const res = await pool.query("Select * from products where deleted = 0");
+const getAllProducts = async ({ categoryId = null,search = null, limit = 10, page = 1 }) => {
+  const res = await pool.query(
+    "Select * from get_all_products($1,$2,$3,$4)",
+    [categoryId, search, limit, page]
+  );
   return successResult("", res.rows);
 };
 
