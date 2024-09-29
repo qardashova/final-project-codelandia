@@ -2,8 +2,11 @@ import { Grid2 } from "@mui/material";
 import InputUseForm from "../../../../../components/input/InputUseForm";
 import MultiSelectUseForm from "../../../../../components/select/MultiSelectUseForm";
 import SelectUseForm from "../../../../../components/select/SelectUseForm";
+import { useGetAllCategoriesQuery } from "../../../../../redux/rtkquery/parametricApi";
 
 const CreateProduct = ({ colors, sizes }) => {
+  const { data: categories } = useGetAllCategoriesQuery();
+
   return (
     <Grid2 container spacing={2}>
       <Grid2 size={12}>
@@ -21,7 +24,7 @@ const CreateProduct = ({ colors, sizes }) => {
         <SelectUseForm
           name={"categoryId"}
           label={"Category"}
-          options={options}
+          options={categories}
           fullData
         />
       </Grid2>
@@ -46,8 +49,3 @@ const CreateProduct = ({ colors, sizes }) => {
 };
 
 export default CreateProduct;
-
-const options = [
-  { id: 1, name: "First" },
-  { id: 2, name: "Second" },
-];

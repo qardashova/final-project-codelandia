@@ -1,19 +1,36 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Row from "../../../components/row";
 import Input from "../../../components/input/Input";
 import { Box } from "@mui/material";
 import Table from "../../../components/table";
 import CustomButton from "../../../components/button";
+import EditOutlinedIcon from "@mui/icons-material/EditOutlined";
 import DeleteOutlineOutlinedIcon from "@mui/icons-material/DeleteOutlineOutlined";
 import { useAppDispatch, useAppSelector } from "../../../redux/store";
 import { handleOpenPopup } from "../../../redux/reducers/faqReducer";
 import AddFAQ from "./popup/AddFAQ";
+import {
+  deleteFAQ,
+  getAllFAQ,
+  getFAQById,
+} from "../../../redux/actions/faqActions";
+import { PAGE_LIMIT } from "../../../constants/consts";
 
 const FAQ = () => {
   const [searchKey, setSearchKey] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const { FAQs, totalCount, popups } = useAppSelector((state) => state.faq);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(
+      getAllFAQ({
+        search: searchKey,
+        limit: PAGE_LIMIT,
+        page: currentPage,
+      })
+    );
+  }, [searchKey, currentPage]);
 
   return (
     <>
@@ -54,8 +71,7 @@ export default FAQ;
 
 const columns = [
   { field: "id", headerName: "ID" },
-  { field: "username", headerName: "User Name", width: 200 },
-  { field: "fullname", headerName: "Full Name", width: 300 },
+  { field: "question", headerName: "Question", width: 200, flex: 1 },
   {
     field: "actions",
     headerName: "Actions",
@@ -69,7 +85,13 @@ const columns = [
         <div>
           <CustomButton
             variant="text"
-            onClick={() => dispatch(deleteUser(params.id))}
+            onClick={() => dispatch(getFAQById(params.id))}
+          >
+            <EditOutlinedIcon />
+          </CustomButton>
+          <CustomButton
+            variant="text"
+            onClick={() => dispatch(deleteFAQ(params.id))}
           >
             <DeleteOutlineOutlinedIcon />
           </CustomButton>

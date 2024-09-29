@@ -1,4 +1,4 @@
-import { createApi } from "@reduxjs/toolkit/query";
+import { createApi } from "@reduxjs/toolkit/query/react";
 import customBaseQuery from "./api";
 
 export const parametricApi = createApi({
@@ -11,18 +11,21 @@ export const parametricApi = createApi({
         url: `parametric/getAllColors`,
         method: "get",
       }),
+      transformResponse: (response) => response.data,
     }),
     getAllCategories: builder.query({
       query: () => ({
         url: "parametric/getAllCategories",
         method: "get",
       }),
+      transformResponse: (response) => response.data,
     }),
     getAllSizes: builder.query({
       query: () => ({
         url: "parametric/getAllSizes",
         method: "get",
       }),
+      transformResponse: (response) => response.data,
     }),
   }),
 });

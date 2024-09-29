@@ -1,11 +1,12 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import baseApi from "../../config/interceptors";
+import { PAGE_LIMIT } from "../../constants/consts";
 
 export const getAllProducts = createAsyncThunk(
   "products/getAllProducts",
-  async (_, thunkApi) => {
+  async (body, thunkApi) => {
     try {
-      const res = await baseApi.get("/products/getAllProducts");
+      const res = await baseApi.post("/products/getAllProducts", body);
       return res?.data.data;
     } catch (error) {
       return thunkApi.rejectWithValue(error);
@@ -38,9 +39,12 @@ export const addProduct = createAsyncThunk(
         //   },
         // }
       );
+      thunkApi.dispatch(
+        getAllProducts({ search: "", limit: PAGE_LIMIT, page: 1 })
+      );
       return res.data?.data;
     } catch (error) {
-     return thunkApi.rejectWithValue(error);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );
@@ -49,10 +53,13 @@ export const deleteProduct = createAsyncThunk(
   "products/deleteProduct",
   async (id, thunkApi) => {
     try {
-      const res = await baseApi.delete(`/deleteProduct/${id}`);
+      const res = await baseApi.delete(`products/deleteProduct/${id}`);
+      thunkApi.dispatch(
+        getAllProducts({ search: "", limit: PAGE_LIMIT, page: 1 })
+      );
       return res?.data.data;
     } catch (error) {
-     return thunkApi.rejectWithValue(error);
+      return thunkApi.rejectWithValue(error);
     }
   }
 );

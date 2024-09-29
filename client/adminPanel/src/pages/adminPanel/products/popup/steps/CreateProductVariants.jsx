@@ -11,7 +11,7 @@ const CreateProductVariants = ({
   setVariantData,
 }) => {
   const watch = methods.watch;
-  const [color, size] = watch(["color", "size"]);
+  const [color = [], size = []] = watch(["color", "size"]);
 
   const handleFileChange = (e, colorId) => {
     const image = e.target.files[0];
@@ -72,44 +72,50 @@ const CreateProductVariants = ({
 
   return (
     <div className="variant-container">
-      {color.map((colorId) => {
-        return (
-          <div className="variant" key={colorId}>
-            {variantData.find(
-              (item) => item.colorId === colorId && !!item.image
-            ) ? (
-              <div className="property img-selected">Image Selected</div>
-            ) : (
-              <label className="property file-input-wrapper">
-                Choose file
-                <input
-                  type="file"
-                  name=""
-                  id=""
-                  className="file-input"
-                  onChange={(e) => handleFileChange(e, colorId)}
-                />
-              </label>
-            )}
+      {color.length &&
+        color.map((colorId) => {
+          return (
+            <div className="variant" key={colorId}>
+              {variantData.find(
+                (item) => item.colorId === colorId && !!item.image
+              ) ? (
+                <div className="property img-selected">Image Selected</div>
+              ) : (
+                <label className="property file-input-wrapper">
+                  Choose file
+                  <input
+                    type="file"
+                    name=""
+                    id=""
+                    className="file-input"
+                    onChange={(e) => handleFileChange(e, colorId)}
+                  />
+                </label>
+              )}
 
-            <div className="property color">{getNameById(colors, colorId)}</div>
-            <div className="property size-price">
-              {size.map((sizeId) => (
-                <>
-                  <div className="size">{getNameById(sizes, sizeId)}</div>
-                  <div className="price">
-                    <Input
-                      label={"price"}
-                      type={"number"}
-                      onChange={(e) => handlePriceChange(e, colorId, sizeId)}
-                    />
-                  </div>
-                </>
-              ))}
+              <div className="property color">
+                {getNameById(colors, colorId)}
+              </div>
+              <div className="property size-price">
+                {size.length &&
+                  size.map((sizeId) => (
+                    <>
+                      <div className="size">{getNameById(sizes, sizeId)}</div>
+                      <div className="price">
+                        <Input
+                          label={"price"}
+                          type={"number"}
+                          onChange={(e) =>
+                            handlePriceChange(e, colorId, sizeId)
+                          }
+                        />
+                      </div>
+                    </>
+                  ))}
+              </div>
             </div>
-          </div>
-        );
-      })}
+          );
+        })}
     </div>
   );
 };

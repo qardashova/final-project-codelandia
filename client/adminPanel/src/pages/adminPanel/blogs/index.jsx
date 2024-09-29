@@ -41,7 +41,7 @@ const Blogs = () => {
             value={searchKey}
             onChange={(e) => setSearchKey(e.target.value)}
           />
-          <CustomButton variant={"outlined"}>Filter</CustomButton>
+          {/* <CustomButton variant={"outlined"}>Filter</CustomButton> */}
         </Row>
         <CustomButton
           variant={"contained"}
@@ -71,8 +71,8 @@ export default Blogs;
 
 const columns = [
   { field: "id", headerName: "ID", width: 70 },
-  { field: "name", headerName: "Blog title", width: 330 },
-  { field: "username", headerName: "Created By", width: 130 },
+  { field: "name", headerName: "Blog title", flex: 1 },
+  { field: "username", headerName: "Created By", flex: 1  },
   // {
   //   field: "fullName",
   //   headerName: "Full name",

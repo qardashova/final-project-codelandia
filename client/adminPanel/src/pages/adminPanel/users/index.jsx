@@ -69,8 +69,8 @@ export default Users;
 
 const columns = [
   { field: "id", headerName: "ID" },
-  { field: "username", headerName: "User Name", width: 200 },
-  { field: "fullname", headerName: "Full Name", width: 300 },
+  { field: "username", headerName: "User Name", width: 200 , flex: 1},
+  { field: "fullname", headerName: "Full Name", width: 300, flex: 1 },
   {
     field: "actions",
     headerName: "Actions",

@@ -4,10 +4,8 @@ import { PAGE_LIMIT } from "../../constants/consts";
 
 const Table = ({ rows, columns, currentPage = 1, handlePaginationChange, rowCount }) => {
   const onPaginationModelChange = (newModel) => {
-    console.log(newModel, "Pagination change");
-    // Call the handlePaginationChange passed from parent
     if (handlePaginationChange) {
-      handlePaginationChange(newModel.page + 1); // Convert back to 1-based index
+      handlePaginationChange(newModel.page + 1);
     }
   };
 

@@ -6,23 +6,30 @@ import CreateProduct from "./steps/CreateProduct";
 import CreateProductVariants from "./steps/CreateProductVariants";
 import { useAppDispatch } from "../../../../redux/store";
 import { addProduct } from "../../../../redux/actions/productActions";
+import {
+  useGetAllColorsQuery,
+  useGetAllSizesQuery,
+} from "../../../../redux/rtkquery/parametricApi";
 
 const AddProductPopup = ({ open, handleClose }) => {
   const [activeStep, setActiveStep] = React.useState(0);
   const [variantData, setVariantData] = useState([]);
+  const { data: colors } = useGetAllColorsQuery();
+  const { data: sizes } = useGetAllSizesQuery();
+
   const methods = useForm();
   const dispatch = useAppDispatch();
 
   const handleSubmit = methods.handleSubmit((data) => {
-    const { color,size,...product} = data;
-    console.log(product);
-    console.log(variantData);
-    dispatch(addProduct({product,productVariants:variantData}))
+    const { color, size, ...product } = data;
+    dispatch(addProduct({ product, productVariants: variantData }));
   });
 
   useEffect(() => {
     if (!open) {
       methods.reset();
+      setActiveStep(0);
+      setVariantData([]);
     }
   }, [open, methods]);
 
@@ -33,7 +40,7 @@ const AddProductPopup = ({ open, handleClose }) => {
       popupTitle={"New Product"}
       minWidth="700px"
     >
-      <FormProvider {...methods} >
+      <FormProvider {...methods}>
         <Form encType="multipart/form-data">
           <Stepper
             activeStep={activeStep}
@@ -65,15 +72,4 @@ const stepList = [
     title: "Create Product Variants",
     component: <CreateProductVariants />,
   },
-];
-
-const colors = [
-  { id: 1, name: "Red" },
-  { id: 2, name: "Blue" },
-];
-
-const sizes = [
-  { id: 1, name: "Small" },
-  { id: 2, name: "Medium" },
-  { id: 3, name: "Large" },
 ];

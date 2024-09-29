@@ -12,15 +12,15 @@ export const sidebarItems = [
   },
   {
     id: 2,
-    title: "Products",
-    icon: <ProductionQuantityLimitsOutlinedIcon />,
-    pathName: "/products",
-  },
-  {
-    id: 3,
     title: "Blogs",
     icon: <BookOutlinedIcon />,
     pathName: "/blogs",
+  },
+  {
+    id: 3,
+    title: "Products",
+    icon: <ProductionQuantityLimitsOutlinedIcon />,
+    pathName: "/products",
   },
   {
     id: 4,
